@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# Redux app (Todos app): 
+### building a todos app using react-redux
+
+## Getting Started with Create React-Redux App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
