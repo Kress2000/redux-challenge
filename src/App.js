@@ -7,10 +7,17 @@ function App() {
   const getTodo = useRef();
   const todoList = useSelector(state=> state.todos.value);
   
-  let UncompletedTasks = todoList.filter(todo=>todo.completed===undefined)
-  let completedTasks = todoList.filter(todo=>todo.completed===true)
-  console.log("not yet", UncompletedTasks, "done", completedTasks)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const addTodoFn = ()=>{
+    dispatch(addTodo({
+      title: getTodo.current.value,
+      id: todoList.length - 1
+    }))
+    getTodo.current.value = "";
+  }
+  
+  let UncompletedTasks = todoList.filter(todo=>todo.completed===undefined) // tasks added
+  let completedTasks = todoList.filter(todo=>todo.completed===true); //finished tasks
 
   return (
     <div className="App">
@@ -18,16 +25,13 @@ function App() {
       <div>
         <div className='addBox'>
         <input type= "text" placeholder='add toto' id='input' name='input' ref={getTodo}/>
-        <button id="addinput" onClick={()=>dispatch(addTodo({
-          title: getTodo.current.value,
-          id: todoList.length - 1
-        }))}>Add Todo</button>
+        <button id="addinput" onClick={addTodoFn}>Add Todo</button>
         </div>
         <h1>List of Uncompleted tasks</h1>
         <div className='todosBox'>
           {UncompletedTasks && UncompletedTasks.map((task, i)=>(<div key={i} id={i}className="task">
             <div className='title'>
-              <input type="checkbox" onClick={()=>dispatch(completeTodo({id: task.id, completed: true}))}/>
+              <input type="checkbox" onClick={()=>dispatch(completeTodo({id: task.id, completed: true}))} />
               <p>{task.title}</p> 
             </div>
           <button onClick={()=>dispatch(deleteTodo({id: task.id}))}>Delete</button>

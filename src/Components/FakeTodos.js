@@ -26,17 +26,5 @@
     {
         title: "lorem ipsum dolor sit amet, consetetur",
         id:6
-    },
-    {
-        title: "lorem ipsum dolor sit amet, consetetur",
-        id:7
-    },
-    {
-        title: "lorem ipsum dolor sit amet, consetetur",
-        id:8
-    },
-    {
-        title: "lorem ipsum dolor sit amet, consetetur",
-        id:9
     }
 ]

@@ -10,7 +10,6 @@ export const TodoSlice = createSlice({
             },
             deleteTodo: (state, action)=>{
                 state.value = state.value.filter(todo=>todo.id !==action.payload.id);
-                console.log(state.value, action.payload)
             },
             completeTodo: (state, action)=>{
                 // let index;
