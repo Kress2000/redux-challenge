@@ -1,34 +1,45 @@
 import React, {useRef} from 'react';
 import './App.css';
 import { useSelector, useDispatch} from 'react-redux';
-import { addTodo } from './Components/Todos';
-
-
+import { addTodo, deleteTodo, completeTodo} from './Components/Todos';
 
 function App() {
   const getTodo = useRef();
   const todoList = useSelector(state=> state.todos.value);
+  
+  let UncompletedTasks = todoList.filter(todo=>todo.completed===undefined)
+  let completedTasks = todoList.filter(todo=>todo.completed===true)
+  console.log("not yet", UncompletedTasks, "done", completedTasks)
   const dispatch = useDispatch()
 
   return (
     <div className="App">
       <h1>Todos App</h1>
       <div>
+        <div className='addBox'>
         <input type= "text" placeholder='add toto' id='input' name='input' ref={getTodo}/>
-        <button onClick={()=>dispatch(addTodo({
-            title: getTodo.current.value,
-            id: todoList.length + 1
-          }))}>Add Todo</button>
+        <button id="addinput" onClick={()=>dispatch(addTodo({
+          title: getTodo.current.value,
+          id: todoList.length - 1
+        }))}>Add Todo</button>
+        </div>
         <h1>List of Uncompleted tasks</h1>
         <div className='todosBox'>
-          {todoList && todoList.map((task, i)=>(<div key={i} id={i} className="task">
+          {UncompletedTasks && UncompletedTasks.map((task, i)=>(<div key={i} id={i}className="task">
             <div className='title'>
-              <input type="checkbox" />
+              <input type="checkbox" onClick={()=>dispatch(completeTodo({id: task.id, completed: true}))}/>
               <p>{task.title}</p> 
             </div>
-          <button>Delete</button>
+          <button onClick={()=>dispatch(deleteTodo({id: task.id}))}>Delete</button>
           </div>))}
         <h1>List of Completed tasks</h1>
+        {completedTasks && completedTasks.map((task, i)=>(<div key={i} id={i}className="task">
+            <div className='title completed'>
+              <input type="checkbox" onClick={()=>dispatch(completeTodo({id: task.id, completed: undefined}))} defaultChecked/>
+              <p>{task.title}</p> 
+            </div>
+          <button onClick={()=>dispatch(deleteTodo({id: task.id}))}>Delete</button>
+          </div>))}
         </div>
       </div>
     </div>

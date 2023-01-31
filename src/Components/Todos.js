@@ -6,10 +6,21 @@ export const TodoSlice = createSlice({
         value: TodosData},
         reducers: {
             addTodo: (state, action)=>{
-                //todo cdes asdd
                 state.value.push(action.payload)
+            },
+            deleteTodo: (state, action)=>{
+                state.value = state.value.filter(todo=>todo.id !==action.payload.id);
+                console.log(state.value, action.payload)
+            },
+            completeTodo: (state, action)=>{
+                // let index;
+                state.value.forEach(todo=>{
+                    if(todo.id ===action.payload.id){
+                        todo.completed = action.payload.completed
+                    }
+                })
             }
         }
 })
-export const {addTodo} = TodoSlice.actions;
+export const {addTodo, deleteTodo, completeTodo} = TodoSlice.actions;
 export default TodoSlice.reducer;
